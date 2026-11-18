@@ -205,6 +205,16 @@ p {
   margin-bottom: var(--space-1);
 }
 
+/* Inline form validation error */
+.form-error {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  color: #991b1b;
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+}
+
 /* ------------------------------------------------------------
    7. Form Controls
    ------------------------------------------------------------ */
@@ -346,6 +356,45 @@ p {
 .task-due {
   font-size: var(--text-xs);
   color: var(--color-text-muted);
+}
+
+.task-description {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.35;
+}
+
+.task-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: var(--color-text-subtle);
+  font-size: 1.25rem;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.btn-delete:hover {
+  color: #dc2626;
+  background-color: #fee2e2;
+}
+
+.btn-delete:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 1px;
 }
 
 /* ------------------------------------------------------------

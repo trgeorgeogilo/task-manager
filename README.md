@@ -2,7 +2,7 @@
 
 A beginner-friendly personal task manager built as the practical project of a five-day **Introduction to Web Development**. The application is developed step by step, starting with a semantic HTML foundation on Day 1 and growing into a styled, interactive, and finally TypeScript-typed application by Day 5.
 
-> **Current status:** Day 2 — CSS styling and responsive layout. The visual design, design tokens, Flexbox layout, cards, priority and status badges, and mobile responsiveness are implemented in `styles.css`. JavaScript interactivity will be added on Day 3. See [Progressive Development Roadmap](#progressive-development-roadmap).
+> **Current status:** Day 3 — JavaScript and DOM manipulation. The application is fully interactive: tasks are dynamically rendered from application state, new tasks can be added with client-side validation, completion status can be toggled via checkboxes, tasks can be deleted, and empty-state messaging responds dynamically. Data persistence using Web Storage will be implemented on Day 4. See [Progressive Development Roadmap](#progressive-development-roadmap).
 
 ---
 
@@ -72,45 +72,50 @@ Only the technologies below are present in the repository today.
 | Technology | Role in the project | Status |
 | --- | --- | --- |
 | HTML5 | Page structure, semantic sections, and the task form | Implemented |
-| CSS3 | Visual design, design tokens, Flexbox layout, badges, responsive design | Implemented (`styles.css`) |
-| JavaScript | Task creation, DOM updates, and interaction | Planned |
+| CSS3 | Visual design, design tokens, Flexbox/Grid layout, badges, responsive design | Implemented (`styles.css`) |
+| JavaScript (ES6+) | Dynamic DOM manipulation, form validation, event handling, state management | Implemented (`app.js`) |
 | JSON / Web Storage | Saving tasks between page reloads | Planned |
 | TypeScript | Typed version of the application logic | Planned |
 
 **No build tools, package managers, frameworks, or third-party dependencies are used at this stage.** The project runs directly in a web browser.
 
-The document links to `styles.css` which provides the complete styling and responsive layout.
+The document links to `styles.css` for styling and loads `app.js` with the `defer` attribute for interactivity.
 
 ## Features
 
-### Implemented today (Day 1 & Day 2)
+### Implemented today (Day 1, Day 2 & Day 3)
 
 - **Structure & Forms (Day 1):**
   - Semantic HTML5 layout with `header`, `main`, `section`, and `footer`.
   - Accessible form with linked labels, placeholder hints, and required attributes.
-  - Priority selector using styled radio pills (Low, Medium, High).
+  - Priority selector dropdown (Low, Medium, High).
   - Date picker for due dates.
-  - Initial task card examples and empty-state placeholder element.
+  - Empty-state placeholder element.
 - **Design & Layout (Day 2):**
   - Design system with CSS custom properties (`:root`) for colors, fonts, spacing, radii, and shadows.
-  - Centered responsive container capped at 720px on desktop screens.
-  - Sticky footer technique using Flexbox on the `body` and `main` containers.
-  - Card-based UI for both the form and task cards with subtle borders and shadows.
+  - Two-column card layout on desktop matching `images/concept.png`.
+  - Sticky footer and responsive grid adapting cleanly to mobile screens (`@media (max-width: 768px)` and `480px`).
+  - Card-based UI for form and task list with subtle borders and elevation.
   - Focus indicators (`:focus-visible` and custom focus rings) for keyboard accessibility.
   - Interactive hover and active feedback on buttons and task cards.
-  - Priority badges (Red for High, Amber for Medium, Green for Low) and status badges.
+  - Priority pill badges (Red for High, Amber for Medium with dark text, Teal for Low).
   - Completed task styling with subtle muted tones and strikethrough.
-  - Responsive layout adapting cleanly to mobile screens (`@media (max-width: 480px)`).
   - Respects user preferences via `@media (prefers-reduced-motion: reduce)`.
+- **Interactivity & State (Day 3):**
+  - **Data drives the DOM:** Application state stored in a `tasks` array; `renderTasks()` projects data cleanly onto `#task-list`.
+  - **Dynamic Task Creation:** `submit` event handler validates inputs, builds a new task object, prepends or appends to the state, and clears the form.
+  - **Input Validation:** Whitespace trimming and title validation with an inline, accessible error message (`#form-error` with `role="alert"`).
+  - **Toggle Completion:** Checkbox event listener flips task status, applies `.completed` styling, and updates accessibility `aria-label` text.
+  - **Task Deletion:** Delete button removes the task by its unique numeric ID and immediately re-renders the list.
+  - **Empty-State Messaging:** Toggles the `#empty-message` element when zero tasks remain.
+  - **Safe Rendering / XSS Prevention:** All user-supplied text is inserted safely via `textContent` rather than `innerHTML`.
 
 ### Not implemented yet
 
 These behaviours are part of the project plan but are **not** present in the code:
 
-- Adding a submitted task dynamically to the list (Day 3 JavaScript).
-- Toggling task completion and deleting tasks via user interaction (Day 3 JavaScript).
-- Toggling the empty-state container dynamically (Day 3 JavaScript).
 - Saving tasks in the browser with Web Storage / LocalStorage (Day 4 Advanced JavaScript).
+- Object-oriented patterns and task class modeling (Day 4 Advanced JavaScript).
 - TypeScript typing and compilation (Day 5 TypeScript).
 
 ## Project Structure
@@ -118,7 +123,8 @@ These behaviours are part of the project plan but are **not** present in the cod
 ```text
 task-manager/
 ├── index.html          # Page structure: header, add-task form, task list, empty state, footer
-├── styles.css          # Design tokens, reset, Flexbox layout, cards, badges, responsive rules
+├── styles.css          # Design tokens, reset, two-column layout, cards, badges, responsive rules
+├── app.js              # Application state, validation, DOM rendering, and event handlers
 ├── README.md           # Project documentation (this file)
 └── images/
     └── concept.png     # Original Day 1 concept presented
@@ -126,8 +132,9 @@ task-manager/
 
 | Path | Description |
 | --- | --- |
-| `index.html` | The single HTML page. Contains the semantic layout, form, sample tasks, and links to `styles.css`. |
-| `styles.css` | Complete stylesheet containing design tokens, Flexbox layout, typography, and responsive media queries. |
+| `index.html` | The single HTML page. Contains the semantic layout, form, and script/style links. |
+| `styles.css` | Complete stylesheet containing design tokens, two-column layout, cards, and responsive media queries. |
+| `app.js` | Interactive application logic: state array, validation, element creation, completion, deletion, and DOM updates. |
 | `images/concept.png` | The original concept image from Day 1. It is the design reference for later stages. |
 | `README.md` | Documentation covering the project, its structure, and its learning roadmap. |
 
@@ -208,7 +215,7 @@ The project is built incrementally. The table separates what is complete from wh
 | --- | --- | --- | --- | --- |
 | **Day 1** | HTML5 | Semantic structure and forms | Page header, add-task form, task list container, footer | **Completed** |
 | **Day 2** | CSS | Layout, colour, typography, responsiveness | Stylesheet, Flexbox layout, CSS variables, priority colours, hover and focus states, responsive behaviour | **Completed** |
-| **Day 3** | JavaScript | Programming fundamentals and the DOM | Reading form values, preventing default submission, creating task elements, event handling, basic task interactions | Planned |
+| **Day 3** | JavaScript | Programming fundamentals and the DOM | Reading form values, preventing default submission, creating task elements, event handling, basic task interactions | **Completed** |
 | **Day 4** | Advanced JavaScript | Data modelling and persistence | Arrays and objects for tasks, JSON serialisation, Web Storage, object-oriented structure, completion and deletion | Planned |
 | **Day 5** | TypeScript | Static typing | TypeScript setup, typed task models, typed functions, DOM type annotations, migration of the JavaScript logic | Planned |
 
@@ -218,10 +225,10 @@ The project is built incrementally. The table separates what is complete from wh
 The page is divided into meaningful regions using `header`, `main`, `section`, and `footer`. The form uses `label` elements linked to inputs by `for` and `id`, an appropriate `input type="date"`, a `select`/radio controls for priority, and a `required` attribute for the title. This provides structure, accessibility, and built-in validation without any styling or scripting.
 
 **Day 2 — CSS (complete)**
-A stylesheet (`styles.css`) is connected to `index.html`. It establishes a design token system using CSS custom properties (`:root`), Flexbox layout with a sticky footer, responsive containers, card styling with subtle elevations, interactive hover and active states, accessible focus indicators, priority and status badge styling, completed task styling, empty-state placeholder rules, and responsive adaptations for screens up to 480px.
+A stylesheet (`styles.css`) is connected to `index.html`. It establishes a design token system using CSS custom properties (`:root`), two-column card layout, responsive containers, priority badges matching the concept design, interactive hover and active states, accessible focus indicators, and mobile adaptations.
 
-**Day 3 — JavaScript (planned)**
-JavaScript will connect the form to the task list. Learners will read input values, stop the default form submission, create list items dynamically, and respond to user events. The result will be a functional in-memory task list.
+**Day 3 — JavaScript (complete)**
+Interactive logic is implemented in `app.js`. Application state is tracked in a structured `tasks` array. A `renderTasks()` function builds cards dynamically with DOM methods, user input is validated on submit with inline error alerts, checkboxes toggle completion state, task cards can be deleted, and the empty-state message automatically reflects list emptiness.
 
 **Day 4 — Advanced JavaScript (planned)**
 Tasks will become structured objects stored in an array. Learners will serialise that data with JSON, save and restore it using the browser's storage APIs, and reorganise the code using object-oriented principles so that task behaviour lives with the task data. Completion and deletion will be added here.
@@ -229,7 +236,7 @@ Tasks will become structured objects stored in an array. Learners will serialise
 **Day 5 — TypeScript (planned)**
 The application logic will be migrated to TypeScript. Learners will define interfaces for task data, add parameter and return types, handle nullable DOM lookups, and use the compiler to catch mistakes before runtime.
 
-> Roadmap items are learning milestones. Day 1 and Day 2 are reflected in the current code.
+> Roadmap items are learning milestones. Day 1, Day 2, and Day 3 are reflected in the current code.
 
 ## Learning Outcomes
 
@@ -298,5 +305,5 @@ No license file is currently included in this repository. Licensing terms have n
 ---
 
 **Training:** Introduction to Web Development — five days
-**Project stage:** Day 2 — CSS styling and responsive layout
+**Project stage:** Day 3 — JavaScript and DOM manipulation
 **Repository:** [github.com/trgeorgeogilo/task-manager](https://github.com/trgeorgeogilo/task-manager)
