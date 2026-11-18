@@ -2,7 +2,7 @@
 
 A beginner-friendly personal task manager built as the practical project of a five-day **Introduction to Web Development**. The application is developed step by step, starting with a semantic HTML foundation on Day 1 and growing into a styled, interactive, and finally TypeScript-typed application by Day 5.
 
-> **Current status:** Day 1 — HTML structure. The page markup and task form exist, but styling, JavaScript behaviour, and persistence have not been implemented yet. See [Progressive Development Roadmap](#progressive-development-roadmap).
+> **Current status:** Day 2 — CSS styling and responsive layout. The visual design, design tokens, Flexbox layout, cards, priority and status badges, and mobile responsiveness are implemented in `styles.css`. JavaScript interactivity will be added on Day 3. See [Progressive Development Roadmap](#progressive-development-roadmap).
 
 ---
 
@@ -72,46 +72,53 @@ Only the technologies below are present in the repository today.
 | Technology | Role in the project | Status |
 | --- | --- | --- |
 | HTML5 | Page structure, semantic sections, and the task form | Implemented |
-| CSS | Visual design and responsive layout | Planned — stylesheet not yet added |
+| CSS3 | Visual design, design tokens, Flexbox layout, badges, responsive design | Implemented (`styles.css`) |
 | JavaScript | Task creation, DOM updates, and interaction | Planned |
 | JSON / Web Storage | Saving tasks between page reloads | Planned |
 | TypeScript | Typed version of the application logic | Planned |
 
 **No build tools, package managers, frameworks, or third-party dependencies are used at this stage.** The project runs directly in a web browser.
 
-The document currently links to `styles.css`, but that file does not exist yet. The link is in place for the Day 2 styling work.
+The document links to `styles.css` which provides the complete styling and responsive layout.
 
 ## Features
 
-### Implemented today
+### Implemented today (Day 1 & Day 2)
 
-- A page header with the application title and a short description.
-- An **Add Task** form containing:
-  - a required **Title** text input,
-  - an optional **Description** text area,
-  - a **Priority** selector with Low, Medium (default), and High options,
-  - an optional **Due date** date picker,
-  - a submit button labelled **Add Task**.
-- A **My Tasks** section with an empty list container ready to receive tasks.
-- A footer with the project copyright line.
-- Basic browser validation for the required title field, provided by HTML attributes.
+- **Structure & Forms (Day 1):**
+  - Semantic HTML5 layout with `header`, `main`, `section`, and `footer`.
+  - Accessible form with linked labels, placeholder hints, and required attributes.
+  - Priority selector using styled radio pills (Low, Medium, High).
+  - Date picker for due dates.
+  - Initial task card examples and empty-state placeholder element.
+- **Design & Layout (Day 2):**
+  - Design system with CSS custom properties (`:root`) for colors, fonts, spacing, radii, and shadows.
+  - Centered responsive container capped at 720px on desktop screens.
+  - Sticky footer technique using Flexbox on the `body` and `main` containers.
+  - Card-based UI for both the form and task cards with subtle borders and shadows.
+  - Focus indicators (`:focus-visible` and custom focus rings) for keyboard accessibility.
+  - Interactive hover and active feedback on buttons and task cards.
+  - Priority badges (Red for High, Amber for Medium, Green for Low) and status badges.
+  - Completed task styling with subtle muted tones and strikethrough.
+  - Responsive layout adapting cleanly to mobile screens (`@media (max-width: 480px)`).
+  - Respects user preferences via `@media (prefers-reduced-motion: reduce)`.
 
 ### Not implemented yet
 
 These behaviours are part of the project plan but are **not** present in the code:
 
-- Styling of any kind — the page renders with browser default styles.
-- Adding a submitted task to the list.
-- Marking tasks as complete or deleting them.
-- Filtering, sorting, or searching tasks.
-- Saving tasks in the browser.
-- Any JavaScript or TypeScript file.
+- Adding a submitted task dynamically to the list (Day 3 JavaScript).
+- Toggling task completion and deleting tasks via user interaction (Day 3 JavaScript).
+- Toggling the empty-state container dynamically (Day 3 JavaScript).
+- Saving tasks in the browser with Web Storage / LocalStorage (Day 4 Advanced JavaScript).
+- TypeScript typing and compilation (Day 5 TypeScript).
 
 ## Project Structure
 
 ```text
 task-manager/
-├── index.html          # Page structure: header, add-task form, task list, footer
+├── index.html          # Page structure: header, add-task form, task list, empty state, footer
+├── styles.css          # Design tokens, reset, Flexbox layout, cards, badges, responsive rules
 ├── README.md           # Project documentation (this file)
 └── images/
     └── concept.png     # Original Day 1 concept presented
@@ -119,7 +126,8 @@ task-manager/
 
 | Path | Description |
 | --- | --- |
-| `index.html` | The single HTML page. Contains the semantic layout and the task form. It references `styles.css`. |
+| `index.html` | The single HTML page. Contains the semantic layout, form, sample tasks, and links to `styles.css`. |
+| `styles.css` | Complete stylesheet containing design tokens, Flexbox layout, typography, and responsive media queries. |
 | `images/concept.png` | The original concept image from Day 1. It is the design reference for later stages. |
 | `README.md` | Documentation covering the project, its structure, and its learning roadmap. |
 
@@ -199,7 +207,7 @@ The project is built incrementally. The table separates what is complete from wh
 | Day | Topic | Focus | Project work | Status |
 | --- | --- | --- | --- | --- |
 | **Day 1** | HTML5 | Semantic structure and forms | Page header, add-task form, task list container, footer | **Completed** |
-| **Day 2** | CSS | Layout, colour, typography, responsiveness | Stylesheet, Flexbox layout, CSS variables, priority colours, hover and focus states, responsive behaviour | Planned |
+| **Day 2** | CSS | Layout, colour, typography, responsiveness | Stylesheet, Flexbox layout, CSS variables, priority colours, hover and focus states, responsive behaviour | **Completed** |
 | **Day 3** | JavaScript | Programming fundamentals and the DOM | Reading form values, preventing default submission, creating task elements, event handling, basic task interactions | Planned |
 | **Day 4** | Advanced JavaScript | Data modelling and persistence | Arrays and objects for tasks, JSON serialisation, Web Storage, object-oriented structure, completion and deletion | Planned |
 | **Day 5** | TypeScript | Static typing | TypeScript setup, typed task models, typed functions, DOM type annotations, migration of the JavaScript logic | Planned |
@@ -207,10 +215,10 @@ The project is built incrementally. The table separates what is complete from wh
 ### What each day adds
 
 **Day 1 — HTML5 (complete)**
-The page is divided into meaningful regions using `header`, `main`, `section`, and `footer`. The form uses `label` elements linked to inputs by `for` and `id`, an appropriate `input type="date"`, a `select` for priority, and a `required` attribute for the title. This provides structure, accessibility, and built-in validation without any styling or scripting.
+The page is divided into meaningful regions using `header`, `main`, `section`, and `footer`. The form uses `label` elements linked to inputs by `for` and `id`, an appropriate `input type="date"`, a `select`/radio controls for priority, and a `required` attribute for the title. This provides structure, accessibility, and built-in validation without any styling or scripting.
 
-**Day 2 — CSS (planned)**
-A stylesheet will be created and connected to the existing `styles.css` reference. The work will cover the visual system from the concept image: layout with Flexbox, spacing, typography, colour, CSS custom properties for reusable values, interactive states for buttons and fields, priority styling, and a layout that adapts to smaller screens.
+**Day 2 — CSS (complete)**
+A stylesheet (`styles.css`) is connected to `index.html`. It establishes a design token system using CSS custom properties (`:root`), Flexbox layout with a sticky footer, responsive containers, card styling with subtle elevations, interactive hover and active states, accessible focus indicators, priority and status badge styling, completed task styling, empty-state placeholder rules, and responsive adaptations for screens up to 480px.
 
 **Day 3 — JavaScript (planned)**
 JavaScript will connect the form to the task list. Learners will read input values, stop the default form submission, create list items dynamically, and respond to user events. The result will be a functional in-memory task list.
@@ -221,7 +229,7 @@ Tasks will become structured objects stored in an array. Learners will serialise
 **Day 5 — TypeScript (planned)**
 The application logic will be migrated to TypeScript. Learners will define interfaces for task data, add parameter and return types, handle nullable DOM lookups, and use the compiler to catch mistakes before runtime.
 
-> Roadmap items are learning milestones. Only Day 1 is reflected in the current code.
+> Roadmap items are learning milestones. Day 1 and Day 2 are reflected in the current code.
 
 ## Learning Outcomes
 
@@ -290,5 +298,5 @@ No license file is currently included in this repository. Licensing terms have n
 ---
 
 **Training:** Introduction to Web Development — five days
-**Project stage:** Day 1 — HTML5 structure
+**Project stage:** Day 2 — CSS styling and responsive layout
 **Repository:** [github.com/trgeorgeogilo/task-manager](https://github.com/trgeorgeogilo/task-manager)

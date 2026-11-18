@@ -1,0 +1,511 @@
+/* ============================================================
+   Personal Task Manager — styles.css
+   Day 2 · CSS Fundamentals, Styling & Concept Design
+   Design Reference: images/concept.png
+   ------------------------------------------------------------
+   1.  Design Tokens (:root)
+   2.  Reset & Base Styles
+   3.  App Layout & Container
+   4.  Header Banner & Description
+   5.  Two-Column Main Content
+   6.  Card Components
+   7.  Form Controls (Inputs, Select, Button)
+   8.  Task List & Task Items
+   9.  Priority Badges (High, Medium, Low)
+   10. Checkbox & Completed Task States
+   11. Empty State
+   12. Footer
+   13. Responsive Adaptations (Tablet & Mobile)
+   14. Accessibility & Reduced Motion
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Design Tokens
+   ------------------------------------------------------------ */
+:root {
+  /* Brand Colours (from concept.png) */
+  --color-navy: #0b1f4b;
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
+  --color-primary-active: #173782;
+
+  /* Priority Badge Colours */
+  --priority-high-bg: #e5484d;
+  --priority-high-text: #ffffff;
+  --priority-medium-bg: #d4a017;
+  --priority-medium-text: #202c45;
+  --priority-low-bg: #0f766e;
+  --priority-low-text: #ffffff;
+
+  /* Neutrals & Surfaces */
+  --color-page-bg: #edf2f7;
+  --color-card-bg: #ffffff;
+  --color-task-bg: #f3f6fb;
+  --color-task-hover: #eaf0f9;
+  --color-input-bg: #f8fafc;
+  --color-footer-bg: #e3e9f3;
+
+  /* Text & Border Colours */
+  --color-text-main: #0f172a;
+  --color-text-navy: #0b1f4b;
+  --color-text-muted: #5a6a85;
+  --color-text-subtle: #718096;
+  --color-border-card: #d0dceb;
+  --color-border-input: #cbd5e1;
+  --color-border-focus: #1d4ed8;
+  --color-focus-ring: rgba(29, 78, 216, 0.18);
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+
+  /* Radius & Shadows */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-pill: 999px;
+  --shadow-window: 0 4px 20px rgba(11, 31, 75, 0.08);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-task-hover: 0 2px 6px rgba(11, 31, 75, 0.06);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+}
+
+/* ------------------------------------------------------------
+   2. Reset & Base Styles
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--color-text-main);
+  background-color: var(--color-page-bg);
+  padding: var(--space-6) var(--space-4);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* Keyboard focus feedback */
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------
+   3. App Layout & Container (Window Frame)
+   ------------------------------------------------------------ */
+.app-wrapper {
+  width: 100%;
+  max-width: 960px;
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border-card);
+  box-shadow: var(--shadow-window);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ------------------------------------------------------------
+   4. Header Banner & Description
+   ------------------------------------------------------------ */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.header-banner {
+  background-color: var(--color-navy);
+  color: #ffffff;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+}
+
+.header-banner h1 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.app-description {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  font-weight: 400;
+  padding-left: var(--space-1);
+}
+
+/* ------------------------------------------------------------
+   5. Two-Column Main Content
+   ------------------------------------------------------------ */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+/* ------------------------------------------------------------
+   6. Card Components (Add Task & My Tasks)
+   ------------------------------------------------------------ */
+.card {
+  background-color: var(--color-card-bg);
+  border: 1.5px solid var(--color-border-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-card);
+}
+
+.card h2 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text-navy);
+  margin-bottom: var(--space-1);
+}
+
+/* ------------------------------------------------------------
+   7. Form Controls
+   ------------------------------------------------------------ */
+#task-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-group label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-family: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-text-main);
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+/* Priority & Due Date side-by-side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+/* Select element styling */
+.form-group select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* Submit Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.7rem 1.25rem;
+  font-family: inherit;
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn:active {
+  background-color: var(--color-primary-active);
+  transform: scale(0.99);
+}
+
+/* ------------------------------------------------------------
+   8. Task List & Task Items
+   ------------------------------------------------------------ */
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.task-item {
+  background-color: var(--color-task-bg);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.task-item:hover {
+  background-color: var(--color-task-hover);
+  box-shadow: var(--shadow-task-hover);
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.task-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text-main);
+  overflow-wrap: break-word;
+}
+
+.task-due {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   9. Priority Badges (Matching Concept Pill Badges)
+   ------------------------------------------------------------ */
+.task-priority {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  padding: 0.35rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-align: center;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.priority-high {
+  background-color: var(--priority-high-bg);
+  color: var(--priority-high-text);
+}
+
+.priority-medium {
+  background-color: var(--priority-medium-bg);
+  color: var(--priority-medium-text);
+}
+
+.priority-low {
+  background-color: var(--priority-low-bg);
+  color: var(--priority-low-text);
+}
+
+/* ------------------------------------------------------------
+   10. Checkbox & Completed Task States
+   ------------------------------------------------------------ */
+.task-checkbox {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-border-input);
+  border-radius: var(--radius-sm);
+  background-color: #ffffff;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.task-checkbox:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.task-checkbox:checked::before {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+.task-checkbox:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Completed task row styling */
+.task-item.completed {
+  opacity: 0.75;
+}
+
+.task-item.completed .task-title {
+  text-decoration: line-through;
+  color: var(--color-text-subtle);
+}
+
+/* ------------------------------------------------------------
+   11. Empty State
+   ------------------------------------------------------------ */
+.empty-message {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  font-style: italic;
+  color: var(--color-text-muted);
+  background-color: var(--color-task-bg);
+  border: 1px dashed var(--color-border-card);
+  border-radius: var(--radius-lg);
+}
+
+.empty-message[hidden] {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   12. Footer
+   ------------------------------------------------------------ */
+.app-footer {
+  background-color: var(--color-footer-bg);
+  border-radius: var(--radius-md);
+  padding: 0.65rem var(--space-4);
+  text-align: center;
+}
+
+.app-footer p {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+/* ------------------------------------------------------------
+   13. Responsive Adaptations
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  body {
+    padding: var(--space-3);
+  }
+
+  .app-wrapper {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .header-banner h1 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .task-item {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .task-priority {
+    min-width: 65px;
+    padding: 0.25rem 0.75rem;
+    font-size: var(--text-xs);
+  }
+}
+
+/* ------------------------------------------------------------
+   14. Accessibility & Reduced Motion
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

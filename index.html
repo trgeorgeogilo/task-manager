@@ -1,46 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>Task Manager</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Task Manager</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-</head>
-
 <body>
-  <header>
-    <h1>Personal Task Manager</h1>
-    <p>Plan your work and track due dates.</p>
-  </header>
-  <main>
-    <section id="add-task">
-      <h2>Add Task</h2>
-      <form id="task-form">
-        <label for="task-title">Title</label>
-        <input type="text" id="task-title" name="title" required>
-        <label for="task-description">Description</label>
-        <textarea id="task-description" name="description"></textarea>
-        <label for="task-priority">Priority</label>
-        <select id="task-priority" name="priority">
-          <option value="low">Low</option>
-          <option value="medium" selected>Medium</option>
-          <option value="high">High</option>
-        </select>
+  <div class="app-wrapper">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-banner">
+        <h1>Personal Task Manager</h1>
+      </div>
+      <p class="app-description">Plan your work, set priorities and track due dates.</p>
+    </header>
 
-        <label for="task-due">Due date</label>
-        <input type="date" id="task-due" name="due">
+    <!-- Main Content: Two Columns -->
+    <main class="main-content">
+      <!-- Left Column: Add Task Form -->
+      <section class="card task-form-section" id="add-task">
+        <h2>Add Task</h2>
+        <form id="task-form">
+          <div class="form-group">
+            <label for="task-title">Task title</label>
+            <input type="text" id="task-title" name="title" placeholder="What needs to be done?" required>
+          </div>
 
-        <button type="submit">Add Task</button>
-      </form>
-    </section>
-    <section id="task-list-section">
-      <h2>My Tasks</h2>
-      <ul id="task-list"></ul>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2026 Task Manager</p>
-  </footer>
+          <div class="form-group">
+            <label for="task-description">Description</label>
+            <textarea id="task-description" name="description" rows="3" placeholder="Optional details..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-priority">Priority</label>
+              <select id="task-priority" name="priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="due-date">Due date</label>
+              <input type="date" id="due-date" name="dueDate">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </form>
+      </section>
+
+      <!-- Right Column: My Tasks List -->
+      <section class="card task-list-section" id="task-list-section">
+        <h2>My Tasks</h2>
+        <ul id="task-list" class="task-list">
+          <li class="task-item">
+            <div class="task-left">
+              <input type="checkbox" class="task-checkbox" aria-label="Mark Finish report as completed">
+              <div class="task-details">
+                <h3 class="task-title">Finish report</h3>
+                <time class="task-due" datetime="2026-11-20">Due 20 Nov</time>
+              </div>
+            </div>
+            <span class="task-priority priority-high">High</span>
+          </li>
+
+          <li class="task-item">
+            <div class="task-left">
+              <input type="checkbox" class="task-checkbox" aria-label="Mark Buy groceries as completed">
+              <div class="task-details">
+                <h3 class="task-title">Buy groceries</h3>
+                <time class="task-due" datetime="2026-11-22">Due 22 Nov</time>
+              </div>
+            </div>
+            <span class="task-priority priority-medium">Medium</span>
+          </li>
+
+          <li class="task-item">
+            <div class="task-left">
+              <input type="checkbox" class="task-checkbox" aria-label="Mark Call the bank as completed">
+              <div class="task-details">
+                <h3 class="task-title">Call the bank</h3>
+                <time class="task-due" datetime="2026-11-25">Due 25 Nov</time>
+              </div>
+            </div>
+            <span class="task-priority priority-low">Low</span>
+          </li>
+        </ul>
+
+        <!-- Empty state placeholder: shown when no tasks exist -->
+        <p id="empty-message" class="empty-message" hidden>
+          No tasks yet — add your first task above.
+        </p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>(c) 2026 Task Manager</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript will be linked here on Day 3:
+  <script src="app.js" defer></script> -->
 </body>
-
 </html>
