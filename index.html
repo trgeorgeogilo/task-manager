@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Task Manager</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="app-wrapper">
     <!-- Header Section -->
@@ -88,6 +90,17 @@
             </div>
             <span class="task-priority priority-low">Low</span>
           </li>
+
+          <li class="task-item">
+            <div class="task-left">
+              <input type="checkbox" class="task-checkbox" aria-label="Mark Wash the dishes as completed">
+              <div class="task-details">
+                <h3 class="task-title">Wash the dishes</h3>
+                <time class="task-due" datetime="2026-11-25">Due 25 Nov</time>
+              </div>
+            </div>
+            <span class="task-priority priority-low">Low</span>
+          </li>
         </ul>
 
         <!-- Empty state placeholder: shown when no tasks exist -->
@@ -105,4 +118,5 @@
 
   <script src="app.js" defer></script>
 </body>
+
 </html>
